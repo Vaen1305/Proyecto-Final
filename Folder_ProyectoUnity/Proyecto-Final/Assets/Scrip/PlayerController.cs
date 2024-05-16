@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour
         {
             PlayerMouseInput = context.ReadValue<Vector2>();
         }
+        else
+        {
+            PlayerMouseInput = Vector2.zero;
+        }
     }
 
     private void FixedUpdate()

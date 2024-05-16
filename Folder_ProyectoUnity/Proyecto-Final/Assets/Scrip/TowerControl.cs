@@ -5,20 +5,16 @@ using UnityEngine;
 public class TowerControl : MonoBehaviour
 {
     [SerializeField] private Camera PlayerCamera;
-
+    [SerializeField] private LayerMask LayerMask;
     private GameObject CurrentTower;
-    void Start()
-    {
-        
-    }
-
+   
     void Update()
     {
         if(CurrentTower != null)
         {
             Ray camaray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
 
-            if(Physics.Raycast(camaray, out RaycastHit hitInfo, 100f))
+            if(Physics.Raycast(camaray, out RaycastHit hitInfo, 100f, LayerMask))
             {
                 CurrentTower.transform.position = hitInfo.point;
             }
