@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Tower : MonoBehaviour
+{
+    public TowerConfig config;
+
+    private float attackTimer = 0f; 
+
+    void Update()
+    {
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= config.attackSpeed)
+        {
+            GameObject target = FindTarget();
+            if (target != null)
+            {
+                Attack(target);
+                attackTimer = 0f;
+            }
+        }
+    }
+
+    GameObject FindTarget()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        GameObject closestEnemy = null;
+        float closestDistance = Mathf.Infinity;
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, enemies[i].transform.position);
+            if (distanceToEnemy < closestDistance && distanceToEnemy <= config.attackRange)
+            {
+                closestDistance = distanceToEnemy;
+                closestEnemy = enemies[i];
+            }
+        }
+
+        return closestEnemy;
+    }
+
+    void Attack(GameObject target)
+    {
+        GameObject projectile = Instantiate(config.projectilePrefab, transform.position, Quaternion.identity);
+        Projectile projectileControl = projectile.GetComponent<Projectile>();
+        projectileControl.targetPosition = target.transform.position;
+    }
+}
+

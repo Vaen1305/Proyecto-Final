@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveControl : MonoBehaviour
+public class WaveController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject enemyPrefab; 
+    public int enemiesPerWave = 10; 
 
-    // Update is called once per frame
-    void Update()
+    public int currentWaveNumber { get; private set; } = 0; 
+
+    public void SpawnWave()
     {
-        
+        for (int i = 0; i < enemiesPerWave; i++)
+        {
+            Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        }
+        currentWaveNumber++;
     }
 }

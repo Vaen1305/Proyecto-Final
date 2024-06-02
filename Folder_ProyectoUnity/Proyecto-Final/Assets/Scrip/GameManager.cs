@@ -5,13 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private int Score;
-
+    [SerializeField] private int Level;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
