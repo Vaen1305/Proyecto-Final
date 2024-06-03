@@ -35,6 +35,7 @@ public class TowerControl : MonoBehaviour
                 {
                     CurrentTower.transform.position = closestPoint.position;
                     isPlacementPointOccupied[closestPointIndex] = true;
+                    CurrentTower.isPlaced = true; 
                     CurrentTower = null;
                 }
             }

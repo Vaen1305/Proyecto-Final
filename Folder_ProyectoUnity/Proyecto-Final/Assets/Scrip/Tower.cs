@@ -5,11 +5,17 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     public TowerConfig config;
+    public bool isPlaced = false; 
 
-    private float attackTimer = 0f; 
+    private float attackTimer = 0f;
 
     void Update()
     {
+        if (!isPlaced)
+        {
+            return;
+        }
+
         attackTimer += Time.deltaTime;
         if (attackTimer >= config.attackSpeed)
         {
