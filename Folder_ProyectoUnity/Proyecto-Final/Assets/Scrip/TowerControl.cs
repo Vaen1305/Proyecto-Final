@@ -47,7 +47,7 @@ public class TowerControl : MonoBehaviour
         Transform closestPoint = null;
         float closestDistance = Mathf.Infinity;
 
-        for (int i = 0; i < towerPlacementPoints.Length; i++)
+        for (int i = 0; i < towerPlacementPoints.Length; ++i)
         {
             float distance = Vector3.Distance(position, towerPlacementPoints[i].position);
             if (distance < closestDistance)

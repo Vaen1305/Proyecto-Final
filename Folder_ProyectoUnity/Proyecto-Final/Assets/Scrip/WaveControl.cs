@@ -1,20 +1,89 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WaveController : MonoBehaviour
 {
-    public GameObject enemyPrefab; 
-    public int enemiesPerWave = 10; 
+    public List<Wave> waves;
+    public Transform[] spawnPoints;
+    public int enemyCount;
+    public int currentWave = 0;
+    public TimerController timerController;
+    public UnityEvent onWaveCompleted;
+    public float spawnInterval = 1f;
+    public static WaveController Instance { get; private set; }
 
-    public int currentWaveNumber { get; private set; } = 0; 
-
-    public void SpawnWave()
+    private void Awake()
     {
-        for (int i = 0; i < enemiesPerWave; i++)
+        if (Instance != null && Instance != this)
         {
-            Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
-        currentWaveNumber++;
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    private void Start()
+    {
+        if (onWaveCompleted == null)
+        {
+            onWaveCompleted = new UnityEvent();
+        }
+
+    }
+
+    public void StartWave()
+    {
+        if (currentWave >= waves.Count)
+        {
+            return;
+        }
+
+
+        StartCoroutine(SpawnWave(waves[currentWave]));
+        ++currentWave;
+    }
+
+    private IEnumerator SpawnWave(Wave wave)
+    {
+        for (int i = 0; i < wave.enemies.Count; ++i)
+        {
+            EnemyType enemyType = wave.enemies[i];
+            for (int j = 0; j < enemyType.count; ++j)
+            {
+                Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+                GameObject enemyPrefab = enemyType.enemyPrefab;
+                Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+                ++enemyCount;
+                yield return new WaitForSeconds(spawnInterval);
+            }
+        }
+    }
+
+    public void EndWave()
+    {
+        if (enemyCount <= 0)
+        {
+            onWaveCompleted.Invoke();
+
+            if (currentWave < waves.Count)
+            {
+            }
+            else
+            {
+            }
+        }
+    }
+
+    public void OnEnemyDestroyed()
+    {
+        --enemyCount;
+        if (enemyCount <= 0)
+        {
+            EndWave();
+        }
     }
 }

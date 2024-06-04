@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     public TowerConfig config;
-    public bool isPlaced = false; 
+    public bool isPlaced = false;
 
     private float attackTimer = 0f;
 
@@ -35,7 +35,7 @@ public class Tower : MonoBehaviour
         GameObject closestEnemy = null;
         float closestDistance = Mathf.Infinity;
 
-        for (int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < enemies.Length; ++i)
         {
             float distanceToEnemy = Vector3.Distance(transform.position, enemies[i].transform.position);
             if (distanceToEnemy < closestDistance && distanceToEnemy <= config.attackRange)
@@ -50,9 +50,10 @@ public class Tower : MonoBehaviour
 
     void Attack(GameObject target)
     {
-        GameObject projectile = Instantiate(config.projectilePrefab, transform.position, Quaternion.identity);
-        Projectile projectileControl = projectile.GetComponent<Projectile>();
-        projectileControl.targetPosition = target.transform.position;
+        GameObject projectileObject = Instantiate(config.projectilePrefab, transform.position, Quaternion.identity);
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        projectile.targetPosition = target.transform.position;
+        projectile.targetEnemy = target;
     }
 }
 
