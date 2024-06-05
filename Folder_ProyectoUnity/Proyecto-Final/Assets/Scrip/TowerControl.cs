@@ -62,6 +62,10 @@ public class TowerControl : MonoBehaviour
 
     public void SetTowerToPlace(Tower towerPrefab)
     {
+        if (CurrentTower != null)
+        {
+            return;
+        }
         CurrentTower = Instantiate(towerPrefab, Vector3.zero, Quaternion.identity);
     }
 }
