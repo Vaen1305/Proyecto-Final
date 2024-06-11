@@ -10,11 +10,23 @@ public class PlayerController : MonoBehaviour
     private Vector2 PlayerMovementInput;
     private Vector2 PlayerMouseInput;
     private float xRot;
-    [SerializeField] private int Health;
-    [SerializeField] private int Money;
+    [SerializeField] private int health;
+    [SerializeField] private int money;
     [SerializeField] private Transform PlayerCamera;
     [SerializeField] private float Speed;
     [SerializeField] private float Sensitivity;
+
+    public int Health 
+    {
+        get { return health; }
+        set { health = value; }
+    }
+
+    public int Money 
+    {
+        get { return money; }
+        set { money = value; }
+    }
 
     private void Start()
     {
@@ -68,5 +80,22 @@ public class PlayerController : MonoBehaviour
         xRot -= PlayerMouseInput.y * Sensitivity;
         transform.Rotate(Vector3.up, PlayerMouseInput.x * Sensitivity);
         PlayerCamera.transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
+    }
+    public bool CanAfford(int amount)
+    {
+        return Money >= amount;
+    }
+
+    public void SpendMoney(int amount)
+    {
+        if (CanAfford(amount))
+        {
+            Money -= amount;
+        }
+    }
+
+    public void AddMoney(int amount)
+    {
+        Money += amount;
     }
 }

@@ -4,12 +4,37 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject ButtonOptionts;
     [SerializeField] private GameObject menuOptionts;
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI moneyText;
+    private PlayerController playerController;
+    void Start()
+    {
+        playerController = FindObjectOfType<PlayerController>();
+        if (playerController == null)
+        {
 
+        }
+    }
+
+    void Update()
+    {
+        if (playerController != null)
+        {
+            UpdateUI();
+        }
+    }
+
+    void UpdateUI()
+    {
+        healthText.text = "Health: " + playerController.Health.ToString();
+        moneyText.text = "Money: " + playerController.Money.ToString();
+    }
     public void ScenePlay()
     {
         SceneManager.LoadScene("Game");

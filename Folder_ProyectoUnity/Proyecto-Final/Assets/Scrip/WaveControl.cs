@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public class WaveController : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class WaveController : MonoBehaviour
     public TimerController timerController;
     public UnityEvent onWaveCompleted;
     public float spawnInterval = 1f;
+    public Light sceneLight;
+    public float colorChangeDuration = 1.0f;
     public static WaveController Instance { get; private set; }
 
     private void Awake()
@@ -42,9 +45,16 @@ public class WaveController : MonoBehaviour
             return;
         }
 
+        AnimateLightChange();
 
         StartCoroutine(SpawnWave(waves[currentWave]));
         ++currentWave;
+    }
+    private void AnimateLightChange()
+    {
+        sceneLight.DOIntensity(1.5f, colorChangeDuration).SetLoops(2, LoopType.Yoyo);
+
+        sceneLight.DOColor(Color.red, colorChangeDuration).SetLoops(2, LoopType.Yoyo);
     }
 
     private IEnumerator SpawnWave(Wave wave)

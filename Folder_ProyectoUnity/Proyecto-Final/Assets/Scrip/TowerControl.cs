@@ -9,6 +9,7 @@ public class TowerControl : MonoBehaviour
     private Tower CurrentTower;
     public Transform[] towerPlacementPoints;
     private bool[] isPlacementPointOccupied;
+    private PlayerController playerController;
 
     void Start()
     {
@@ -67,5 +68,11 @@ public class TowerControl : MonoBehaviour
             return;
         }
         CurrentTower = Instantiate(towerPrefab, Vector3.zero, Quaternion.identity);
+
+        if (playerController.CanAfford(towerPrefab.config.price))
+        {
+            playerController.SpendMoney(towerPrefab.config.price);
+            CurrentTower = Instantiate(towerPrefab, Vector3.zero, Quaternion.identity);
+        }
     }
 }
