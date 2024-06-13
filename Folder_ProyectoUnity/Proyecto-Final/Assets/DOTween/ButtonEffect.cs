@@ -8,23 +8,52 @@ public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private RectTransform rectTransform;
     private Image buttonImage;
     private Color originalColor;
+    private Tween scaleTween;
+    private Tween colorTween;
 
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
         buttonImage = GetComponent<Image>();
-        originalColor = buttonImage.color;
+        if (buttonImage != null)
+        {
+            originalColor = buttonImage.color;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        rectTransform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 0.3f).SetEase(Ease.OutBounce);
-        buttonImage.DOColor(Color.yellow, 0.3f); 
+        if (rectTransform != null)
+        {
+            scaleTween?.Kill();
+            scaleTween = rectTransform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 0.3f).SetEase(Ease.OutBounce);
+        }
+
+        if (buttonImage != null)
+        {
+            colorTween?.Kill();
+            colorTween = buttonImage.DOColor(Color.yellow, 0.3f);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        rectTransform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBounce);
-        buttonImage.DOColor(originalColor, 0.3f);
+        if (rectTransform != null)
+        {
+            scaleTween?.Kill();
+            scaleTween = rectTransform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBounce);
+        }
+
+        if (buttonImage != null)
+        {
+            colorTween?.Kill();
+            colorTween = buttonImage.DOColor(originalColor, 0.3f);
+        }
+    }
+
+    void OnDestroy()
+    {
+        scaleTween?.Kill();
+        colorTween?.Kill();
     }
 }

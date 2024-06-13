@@ -1790,7 +1790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 728230411}
   health: 0
-  money: 0
+  money: 100
   PlayerCamera: {fileID: 330585546}
   Speed: 4
   Sensitivity: 0.56
@@ -4635,7 +4635,7 @@ MonoBehaviour:
         m_MethodName: SetTowerToPlace
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: -1993382040138590223, guid: 5bb34de3aea24e441b961680f187f549,
+          m_ObjectArgument: {fileID: 366352677008151780, guid: c368563f63b590c46abc3a106e81973d,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
           m_IntArgument: 0

@@ -27,6 +27,10 @@ public class Tower : MonoBehaviour
             }
         }
     }
+    protected virtual void Attack(GameObject target)
+    {
+
+    }
 
     GameObject FindTarget()
     {
@@ -46,14 +50,6 @@ public class Tower : MonoBehaviour
         }
 
         return closestEnemy;
-    }
-
-    void Attack(GameObject target)
-    {
-        GameObject projectileObject = Instantiate(config.projectilePrefab, transform.position, Quaternion.identity);
-        Projectile projectile = projectileObject.GetComponent<Projectile>();
-        projectile.targetPosition = target.transform.position;
-        projectile.targetEnemy = target;
     }
 }
 

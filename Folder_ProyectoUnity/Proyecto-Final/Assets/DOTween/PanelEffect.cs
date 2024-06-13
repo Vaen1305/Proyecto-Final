@@ -7,8 +7,9 @@ using UnityEngine.UI;
 public class PanelEffect : MonoBehaviour
 {
     public RectTransform panelTransform;
+    private Tween panelTween;
 
-    void Start()
+    void OnEnable() 
     {
         AnimatePanelDrop();
     }
@@ -16,7 +17,14 @@ public class PanelEffect : MonoBehaviour
     void AnimatePanelDrop()
     {
         panelTransform.anchoredPosition = new Vector2(0, Screen.height);
-
+        panelTween?.Kill(); 
         panelTransform.DOAnchorPos(Vector2.zero, 1.0f).SetEase(Ease.OutBounce);
+    }
+    void OnDestroy()
+    {
+        if (panelTransform != null)
+        {
+            panelTween?.Kill();
+        }
     }
 }

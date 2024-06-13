@@ -32,11 +32,11 @@ public class EnemyControl : MonoBehaviour
         }
     }
 
-    public void TakeDamage(GameObject enemy, Projectile projectile)
+    public void TakeDamage(GameObject enemy, int damage)
     {
         if (enemy == gameObject)
         {
-            stats.health -= projectile.config.damage;
+            stats.health -= damage;
 
             if (stats.health <= 0)
             {

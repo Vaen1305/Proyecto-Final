@@ -14,6 +14,12 @@ public class TowerControl : MonoBehaviour
     void Start()
     {
         isPlacementPointOccupied = new bool[towerPlacementPoints.Length];
+        playerController = FindObjectOfType<PlayerController>();
+
+        if (playerController == null)
+        {
+            Debug.LogError("PlayerController not found!");
+        }
     }
 
     void Update()
@@ -36,7 +42,7 @@ public class TowerControl : MonoBehaviour
                 {
                     CurrentTower.transform.position = closestPoint.position;
                     isPlacementPointOccupied[closestPointIndex] = true;
-                    CurrentTower.isPlaced = true; 
+                    CurrentTower.isPlaced = true;
                     CurrentTower = null;
                 }
             }
@@ -67,12 +73,18 @@ public class TowerControl : MonoBehaviour
         {
             return;
         }
-        CurrentTower = Instantiate(towerPrefab, Vector3.zero, Quaternion.identity);
 
-        if (playerController.CanAfford(towerPrefab.config.price))
+        if (playerController != null)
         {
-            playerController.SpendMoney(towerPrefab.config.price);
-            CurrentTower = Instantiate(towerPrefab, Vector3.zero, Quaternion.identity);
+            if (playerController.CanAfford(towerPrefab.config.price))
+            {
+                playerController.SpendMoney(towerPrefab.config.price);
+                CurrentTower = Instantiate(towerPrefab, Vector3.zero, Quaternion.identity);
+            }
+            else
+            {
+                Debug.Log("Bo hay moneda.");
+            }
         }
     }
 }

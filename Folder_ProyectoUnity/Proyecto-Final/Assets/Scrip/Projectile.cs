@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     public Vector3 targetPosition;
     public GameObject targetEnemy;
 
-    public delegate void OnHitEnemyHandler(GameObject enemy, Projectile projectile);
+    public delegate void OnHitEnemyHandler(GameObject enemy, int damage);
     public event OnHitEnemyHandler OnHitEnemy;
 
     void Start()
@@ -29,17 +29,25 @@ public class Projectile : MonoBehaviour
 
         if (transform.position == targetPosition)
         {
-            Destroy(gameObject);
+            HandleHit();
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        EnemyControl enemyControl = other.gameObject.GetComponent<EnemyControl>();
-        if (enemyControl != null)
+        if (other.gameObject == targetEnemy)
         {
-            enemyControl.TakeDamage(other.gameObject, this);
+            HandleHit();
         }
+    }
+
+    private void HandleHit()
+    {
+        if (targetEnemy != null)
+        {
+            OnHitEnemy?.Invoke(targetEnemy, config.damage);
+        }
+        Destroy(gameObject);
     }
 }
 
