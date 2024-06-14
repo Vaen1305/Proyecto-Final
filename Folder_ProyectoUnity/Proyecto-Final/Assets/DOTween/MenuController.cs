@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class MenuController : MonoBehaviour
 
     public void OpenMenu()
     {
-        menu.SetActive(true); 
+        menu.SetActive(true);
     }
 
     public void CloseMenu()

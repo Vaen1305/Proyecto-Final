@@ -64,6 +64,7 @@ public class UIManager : MonoBehaviour
     }
     public void Menu()
     {
+        DOTween.KillAll();
         SceneManager.LoadScene("Inicio");
     }
 }

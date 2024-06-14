@@ -31,7 +31,10 @@ public class TowerControl : MonoBehaviour
             if (Physics.Raycast(camaray, out RaycastHit hitInfo, 100f, LayerMask))
             {
                 Transform closestPoint = GetClosestPlacementPoint(hitInfo.point);
-                CurrentTower.transform.position = hitInfo.point;
+                Vector3 newPosition = hitInfo.point;
+
+                newPosition.y = closestPoint.position.y;
+                CurrentTower.transform.position = newPosition;
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -79,11 +82,20 @@ public class TowerControl : MonoBehaviour
             if (playerController.CanAfford(towerPrefab.config.price))
             {
                 playerController.SpendMoney(towerPrefab.config.price);
-                CurrentTower = Instantiate(towerPrefab, Vector3.zero, Quaternion.identity);
+                CurrentTower = Instantiate(towerPrefab);
+
+                Ray camaray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(camaray, out RaycastHit hitInfo, 100f, LayerMask))
+                {
+                    Transform closestPoint = GetClosestPlacementPoint(hitInfo.point);
+                    Vector3 newPosition = hitInfo.point;
+                    newPosition.y = closestPoint.position.y;
+                    CurrentTower.transform.position = newPosition;
+                }
             }
             else
             {
-                Debug.Log("Bo hay moneda.");
+                Debug.Log("No hay moneda.");
             }
         }
     }

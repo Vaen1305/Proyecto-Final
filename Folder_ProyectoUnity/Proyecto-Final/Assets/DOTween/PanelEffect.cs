@@ -9,22 +9,20 @@ public class PanelEffect : MonoBehaviour
     public RectTransform panelTransform;
     private Tween panelTween;
 
-    void OnEnable() 
+    void OnEnable()
     {
         AnimatePanelDrop();
     }
 
     void AnimatePanelDrop()
     {
+        panelTween?.Kill();
         panelTransform.anchoredPosition = new Vector2(0, Screen.height);
-        panelTween?.Kill(); 
-        panelTransform.DOAnchorPos(Vector2.zero, 1.0f).SetEase(Ease.OutBounce);
+        panelTween = panelTransform.DOAnchorPos(Vector2.zero, 1.0f).SetEase(Ease.OutBounce);
     }
+
     void OnDestroy()
     {
-        if (panelTransform != null)
-        {
-            panelTween?.Kill();
-        }
+        panelTween?.Kill();
     }
 }
