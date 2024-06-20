@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 543933333793334721}
   - component: {fileID: 240939326825821146}
   - component: {fileID: 366352677008151780}
-  m_Layer: 1
+  m_Layer: 2
   m_Name: CatapultaTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

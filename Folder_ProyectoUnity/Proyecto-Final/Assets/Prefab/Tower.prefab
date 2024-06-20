@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1979796916691507378}
   - component: {fileID: -7490621286278947060}
   - component: {fileID: -1993382040138590223}
-  m_Layer: 1
+  m_Layer: 2
   m_Name: Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,3 +119,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 5dfd01b82267bcc4d95ee1bb1cd223c3, type: 2}
+  isPlaced: 0

@@ -95,7 +95,7 @@ public class TowerControl : MonoBehaviour
             }
             else
             {
-                Debug.Log("No hay moneda.");
+                Debug.Log("Not enough money.");
             }
         }
     }

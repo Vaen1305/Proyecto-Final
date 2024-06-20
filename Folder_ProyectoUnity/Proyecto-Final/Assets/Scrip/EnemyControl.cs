@@ -37,7 +37,6 @@ public class EnemyControl : MonoBehaviour
         if (enemy == gameObject)
         {
             stats.health -= damage;
-
             if (stats.health <= 0)
             {
                 Destroy(gameObject);
