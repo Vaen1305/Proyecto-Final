@@ -11,6 +11,14 @@ public class EnemyControl : MonoBehaviour
 
     public AnimationCurve speedCurve;
 
+    void Start()
+    {
+        if (stats == null)
+        {
+            stats = new EnemyStats();
+        }
+    }
+
     void Update()
     {
         if (currentWaypointIndex >= waypoints.Length)
@@ -32,17 +40,16 @@ public class EnemyControl : MonoBehaviour
         }
     }
 
-    public void TakeDamage(GameObject enemy, int damage)
+    public void TakeDamage(GameObject source, int damage)
     {
-        if (enemy == gameObject)
+        stats.health -= damage;
+        if (stats.health <= 0)
         {
-            stats.health -= damage;
-            if (stats.health <= 0)
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
+
+
 
     void OnDestroy()
     {

@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class TeslaTower : Tower
 {
-    public TeslaTowerConfig teslaConfig;
-    private Queue<EnemyControl> enemiesInRange = new Queue<EnemyControl>();
+    public TeslaTowerConfig teslaConfig; // Referencia al scriptable object específico de TeslaTower
+    private SortedSet<EnemyControl> enemiesInRange = new SortedSet<EnemyControl>(new EnemyComparer());
     private SphereCollider attackRange;
 
     void Start()
     {
+        if (teslaConfig == null)
+        {
+            Debug.LogError("TeslaTowerConfig is not assigned!");
+            return;
+        }
+
         attackRange = gameObject.AddComponent<SphereCollider>();
         attackRange.isTrigger = true;
         attackRange.radius = teslaConfig.attackRadius;
@@ -25,9 +31,9 @@ public class TeslaTower : Tower
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             EnemyControl enemy = other.GetComponent<EnemyControl>();
-            if (enemy != null && !enemiesInRange.Contains(enemy))
+            if (enemy != null)
             {
-                enemiesInRange.Enqueue(enemy);
+                enemiesInRange.Add(enemy);
             }
         }
     }
@@ -37,18 +43,9 @@ public class TeslaTower : Tower
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             EnemyControl enemy = other.GetComponent<EnemyControl>();
-            if (enemy != null && enemiesInRange.Contains(enemy))
+            if (enemy != null)
             {
-                Queue<EnemyControl> newQueue = new Queue<EnemyControl>();
-                while (enemiesInRange.Count > 0)
-                {
-                    EnemyControl dequeuedEnemy = enemiesInRange.Dequeue();
-                    if (dequeuedEnemy != enemy)
-                    {
-                        newQueue.Enqueue(dequeuedEnemy);
-                    }
-                }
-                enemiesInRange = newQueue;
+                enemiesInRange.Remove(enemy);
             }
         }
     }
@@ -61,17 +58,43 @@ public class TeslaTower : Tower
 
             if (enemiesInRange.Count > 0)
             {
-                EnemyControl enemy = enemiesInRange.Peek();
-                if (enemy != null)
+                foreach (EnemyControl enemy in enemiesInRange)
                 {
-                    enemy.TakeDamage(enemy.gameObject, teslaConfig.damage);
-                }
+                    if (enemy != null)
+                    {
+                        // Crear y configurar el efecto de rayo
+                        GameObject lightningEffect = Instantiate(teslaConfig.lightningEffectPrefab, transform.position, Quaternion.identity);
+                        LineRenderer lineRenderer = lightningEffect.GetComponent<LineRenderer>();
+                        lineRenderer.SetPosition(0, transform.position);
+                        lineRenderer.SetPosition(1, enemy.transform.position);
 
-                if (enemy == null || enemy.stats.health <= 0)
-                {
-                    enemiesInRange.Dequeue();
+                        // Aplicar daño al enemigo
+                        enemy.TakeDamage(enemy.gameObject, teslaConfig.damage);
+
+                        // Destruir el efecto de rayo después de un corto tiempo
+                        Destroy(lightningEffect, 0.2f);
+                    }
+
+                    if (enemy == null || enemy.stats.health <= 0)
+                    {
+                        enemiesInRange.Remove(enemy);
+                        break;
+                    }
                 }
             }
         }
     }
 }
+
+public class EnemyComparer : IComparer<EnemyControl>
+{
+    public int Compare(EnemyControl x, EnemyControl y)
+    {
+        if (x == null || y == null)
+        {
+            return 0;
+        }
+        return x.stats.health.CompareTo(y.stats.health);
+    }
+}
+    

@@ -6,8 +6,8 @@ public class Tower : MonoBehaviour
 {
     public TowerConfig config;
     public bool isPlaced = false;
-
-    private float attackTimer = 0f;
+    protected GameObject target;
+    protected float attackTimer = 0f; 
 
     void Update()
     {
@@ -19,7 +19,7 @@ public class Tower : MonoBehaviour
         attackTimer += Time.deltaTime;
         if (attackTimer >= config.attackSpeed)
         {
-            GameObject target = FindTarget();
+            target = FindTarget();
             if (target != null)
             {
                 Attack(target);
@@ -27,12 +27,24 @@ public class Tower : MonoBehaviour
             }
         }
     }
+
     protected virtual void Attack(GameObject target)
     {
+        if (config.projectilePrefab != null)
+        {
+            GameObject projectileObject = Instantiate(config.projectilePrefab, transform.position, Quaternion.identity);
+            Projectile projectile = projectileObject.GetComponent<Projectile>();
 
+            if (projectile != null)
+            {
+                projectile.targetEnemy = target;
+                projectile.targetPosition = target.transform.position;
+                projectile.config = config.projectilePrefab.GetComponent<Projectile>().config;
+            }
+        }
     }
 
-    GameObject FindTarget()
+    protected GameObject FindTarget()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
@@ -52,4 +64,3 @@ public class Tower : MonoBehaviour
         return closestEnemy;
     }
 }
-

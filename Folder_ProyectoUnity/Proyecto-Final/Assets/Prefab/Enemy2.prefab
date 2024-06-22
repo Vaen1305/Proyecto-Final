@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-    speed: 51.16
+    speed: 9
     health: 4
     damage: 14
   waypoints:

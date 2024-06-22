@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421463fea2024c94f963b09c5d73daa0, type: 3}
   m_Name: TeslaTowerConfig
   m_EditorClassIdentifier: 
-  attackRadius: 100
-  attackInterval: 0.08
   damage: 10
+  attackInterval: 0.08
+  attackRadius: 0
+  lightningEffectPrefab: {fileID: 6325001410385241042, guid: f81c45afee0bec1408b666c02cda2483,
+    type: 3}
   price: 50

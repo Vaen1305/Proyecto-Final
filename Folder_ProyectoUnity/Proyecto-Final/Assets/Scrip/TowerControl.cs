@@ -18,7 +18,7 @@ public class TowerControl : MonoBehaviour
 
         if (playerController == null)
         {
-            Debug.LogError("PlayerController not found!");
+
         }
     }
 
@@ -28,7 +28,7 @@ public class TowerControl : MonoBehaviour
         {
             Ray camaray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(camaray, out RaycastHit hitInfo, 100f, LayerMask))
+            if (Physics.Raycast(camaray, out RaycastHit hitInfo, 10000f, LayerMask))
             {
                 Transform closestPoint = GetClosestPlacementPoint(hitInfo.point);
                 Vector3 newPosition = hitInfo.point;
@@ -92,10 +92,6 @@ public class TowerControl : MonoBehaviour
                     newPosition.y = closestPoint.position.y;
                     CurrentTower.transform.position = newPosition;
                 }
-            }
-            else
-            {
-                Debug.Log("Not enough money.");
             }
         }
     }
