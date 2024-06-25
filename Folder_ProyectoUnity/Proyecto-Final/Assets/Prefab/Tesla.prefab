@@ -123,6 +123,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 5dfd01b82267bcc4d95ee1bb1cd223c3, type: 2}
   isPlaced: 0
+  teslaTowerConfig: {fileID: 11400000, guid: 4f1d43866977c5c43b7e4e4fba8dff65, type: 2}
+  lineRenderer: {fileID: 1365366267525079880}
 --- !u!120 &1365366267525079880
 LineRenderer:
   serializedVersion: 2

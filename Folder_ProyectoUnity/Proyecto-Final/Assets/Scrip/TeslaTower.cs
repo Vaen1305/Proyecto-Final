@@ -1,100 +1,132 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TeslaTower : Tower
 {
-    public TeslaTowerConfig teslaConfig; // Referencia al scriptable object específico de TeslaTower
-    private SortedSet<EnemyControl> enemiesInRange = new SortedSet<EnemyControl>(new EnemyComparer());
-    private SphereCollider attackRange;
+    public TeslaTowerConfig teslaTowerConfig;
+    public LineRenderer lineRenderer;
+    private List<EnemyControl> enemiesInRange = new List<EnemyControl>();
+    private float attackCooldown;
+    private float timeSinceLastAttack;
 
     void Start()
     {
-        if (teslaConfig == null)
+        if (teslaTowerConfig == null)
         {
-            Debug.LogError("TeslaTowerConfig is not assigned!");
             return;
         }
 
-        attackRange = gameObject.AddComponent<SphereCollider>();
-        attackRange.isTrigger = true;
-        attackRange.radius = teslaConfig.attackRadius;
+        attackCooldown = teslaTowerConfig.attackCooldown;
+        timeSinceLastAttack = attackCooldown;
 
-        Rigidbody rb = gameObject.AddComponent<Rigidbody>();
-        rb.isKinematic = true;
+        lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer == null)
+        {
 
-        StartCoroutine(AttackEnemies());
+        }
+        else
+        {
+            lineRenderer.positionCount = 2;
+            lineRenderer.enabled = false;
+        }
+
+        SphereCollider detectionCollider = gameObject.AddComponent<SphereCollider>();
+        detectionCollider.isTrigger = true;
+        detectionCollider.radius = teslaTowerConfig.attackRange;
+    }
+
+    void Update()
+    {
+        if (!isPlaced)
+        {
+            return;
+        }
+
+        timeSinceLastAttack += Time.deltaTime;
+
+        if (timeSinceLastAttack >= attackCooldown)
+        {
+            if (enemiesInRange.Count > 0)
+            {
+                AttackAllEnemies();
+                timeSinceLastAttack = 0f;
+            }
+            else
+            {
+                DisableLineRenderer();
+            }
+        }
+    }
+
+    private void AttackAllEnemies()
+    {
+        List<Vector3> positions = new List<Vector3> { transform.position };
+
+        foreach (EnemyControl enemyControl in enemiesInRange)
+        {
+            if (enemyControl != null && enemyControl.stats.health > 0)
+            {
+                Attack(enemyControl.gameObject);
+                positions.Add(enemyControl.transform.position);
+            }
+        }
+
+        DrawLightning(positions);
+    }
+
+    protected override void Attack(GameObject target)
+    {
+        EnemyControl enemyControl = target.GetComponent<EnemyControl>();
+
+        if (enemyControl != null)
+        {
+            int damageToApply = Mathf.RoundToInt(teslaTowerConfig.fixedDamage);
+
+            enemyControl.TakeDamage(gameObject, damageToApply);
+        }
+    }
+
+    private void DrawLightning(List<Vector3> positions)
+    {
+        if (lineRenderer != null)
+        {
+            lineRenderer.positionCount = positions.Count;
+            lineRenderer.SetPositions(positions.ToArray());
+            lineRenderer.enabled = true;
+
+            Invoke("DisableLineRenderer", 0.1f);
+        }
+    }
+
+    private void DisableLineRenderer()
+    {
+        if (lineRenderer != null)
+        {
+            lineRenderer.enabled = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
-            EnemyControl enemy = other.GetComponent<EnemyControl>();
-            if (enemy != null)
+            EnemyControl enemyControl = other.GetComponent<EnemyControl>();
+            if (enemyControl != null)
             {
-                enemiesInRange.Add(enemy);
+                enemiesInRange.Add(enemyControl);
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
-            EnemyControl enemy = other.GetComponent<EnemyControl>();
-            if (enemy != null)
+            EnemyControl enemyControl = other.GetComponent<EnemyControl>();
+            if (enemyControl != null)
             {
-                enemiesInRange.Remove(enemy);
-            }
-        }
-    }
-
-    private IEnumerator AttackEnemies()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(teslaConfig.attackInterval);
-
-            if (enemiesInRange.Count > 0)
-            {
-                foreach (EnemyControl enemy in enemiesInRange)
-                {
-                    if (enemy != null)
-                    {
-                        // Crear y configurar el efecto de rayo
-                        GameObject lightningEffect = Instantiate(teslaConfig.lightningEffectPrefab, transform.position, Quaternion.identity);
-                        LineRenderer lineRenderer = lightningEffect.GetComponent<LineRenderer>();
-                        lineRenderer.SetPosition(0, transform.position);
-                        lineRenderer.SetPosition(1, enemy.transform.position);
-
-                        // Aplicar daño al enemigo
-                        enemy.TakeDamage(enemy.gameObject, teslaConfig.damage);
-
-                        // Destruir el efecto de rayo después de un corto tiempo
-                        Destroy(lightningEffect, 0.2f);
-                    }
-
-                    if (enemy == null || enemy.stats.health <= 0)
-                    {
-                        enemiesInRange.Remove(enemy);
-                        break;
-                    }
-                }
+                enemiesInRange.Remove(enemyControl);
             }
         }
     }
 }
-
-public class EnemyComparer : IComparer<EnemyControl>
-{
-    public int Compare(EnemyControl x, EnemyControl y)
-    {
-        if (x == null || y == null)
-        {
-            return 0;
-        }
-        return x.stats.health.CompareTo(y.stats.health);
-    }
-}
-    

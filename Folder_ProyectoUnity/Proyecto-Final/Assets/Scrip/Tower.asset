@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 40.5
   attackSpeed: 0.18
-  projectilePrefab: {fileID: 5509641948300594788, guid: 9360299a9d15bef4bb3a7ca719e96a09,
+  projectilePrefab: {fileID: 5748356383537629176, guid: 7db5c9dafd726c743b34e1b086f41652,
     type: 3}
   price: 50

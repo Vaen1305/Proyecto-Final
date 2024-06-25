@@ -7,8 +7,8 @@ public class Tower : MonoBehaviour
     public TowerConfig config;
     public bool isPlaced = false;
     protected GameObject target;
-    protected float attackTimer = 0f; 
-
+    protected float attackTimer = 0f;
+    public Transform shootPoint;
     void Update()
     {
         if (!isPlaced)
@@ -30,9 +30,9 @@ public class Tower : MonoBehaviour
 
     protected virtual void Attack(GameObject target)
     {
-        if (config.projectilePrefab != null)
+        if (config.projectilePrefab != null && shootPoint != null)
         {
-            GameObject projectileObject = Instantiate(config.projectilePrefab, transform.position, Quaternion.identity);
+            GameObject projectileObject = Instantiate(config.projectilePrefab, shootPoint.position, Quaternion.identity); 
             Projectile projectile = projectileObject.GetComponent<Projectile>();
 
             if (projectile != null)

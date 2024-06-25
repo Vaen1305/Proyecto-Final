@@ -1,11 +1,8 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TeslaTowerConfig", menuName = "TowerDefense/TeslaTowerConfig")]
-public class TeslaTowerConfig : ScriptableObject
+[CreateAssetMenu(fileName = "TeslaTowerConfig", menuName = "Tower Defense/TeslaTowerConfig")]
+public class TeslaTowerConfig : TowerConfig
 {
-    public int damage;
-    public float attackInterval;
-    public float attackRadius;
-    public GameObject lightningEffectPrefab; 
-    public int price;
+    public float fixedDamage;
+    public float attackCooldown; 
 }

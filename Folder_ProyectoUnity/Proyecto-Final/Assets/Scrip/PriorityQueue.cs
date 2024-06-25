@@ -1,36 +1,38 @@
+using System;
 using System.Collections.Generic;
 
-public class PriorityQueue<T>
+public class PriorityQueue<T> where T : IComparable<T>
 {
-    private List<KeyValuePair<T, float>> elements = new List<KeyValuePair<T, float>>();
+    private SortedSet<T> set = new SortedSet<T>();
 
-    public int Count
+    public int Count => set.Count;
+
+    public void Enqueue(T item)
     {
-        get { return elements.Count; }
+        set.Add(item);
     }
 
-    public void Enqueue(T item, float priority)
+    public void Dequeue(T item)
     {
-        elements.Add(new KeyValuePair<T, float>(item, priority));
-        elements.Sort((x, y) => x.Value.CompareTo(y.Value));
+        set.Remove(item);
+    }
+
+    public T Peek()
+    {
+        if (set.Count == 0) throw new InvalidOperationException("The queue is empty.");
+        return set.Min;
     }
 
     public T Dequeue()
     {
-        var item = elements[0];
-        elements.RemoveAt(0);
-        return item.Key;
+        if (set.Count == 0) throw new InvalidOperationException("The queue is empty.");
+        T min = set.Min;
+        set.Remove(min);
+        return min;
     }
 
-    public bool Contains(T item)
+    public IEnumerator<T> GetEnumerator()
     {
-        foreach (var element in elements)
-        {
-            if (EqualityComparer<T>.Default.Equals(element.Key, item))
-            {
-                return true;
-            }
-        }
-        return false;
+        return set.GetEnumerator();
     }
 }
