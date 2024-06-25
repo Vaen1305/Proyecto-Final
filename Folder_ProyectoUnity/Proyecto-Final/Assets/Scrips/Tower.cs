@@ -9,6 +9,7 @@ public class Tower : MonoBehaviour
     protected GameObject target;
     protected float attackTimer = 0f;
     public Transform shootPoint;
+
     void Update()
     {
         if (!isPlaced)
@@ -16,11 +17,13 @@ public class Tower : MonoBehaviour
             return;
         }
 
-        attackTimer += Time.deltaTime;
-        if (attackTimer >= config.attackSpeed)
+        target = FindTarget();
+        if (target != null)
         {
-            target = FindTarget();
-            if (target != null)
+            RotateTowardsTarget(target);
+
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= config.attackSpeed)
             {
                 Attack(target);
                 attackTimer = 0f;
@@ -28,18 +31,24 @@ public class Tower : MonoBehaviour
         }
     }
 
+    private void RotateTowardsTarget(GameObject target)
+    {
+        Vector3 direction = (target.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * config.rotationSpeed);
+    }
+
     protected virtual void Attack(GameObject target)
     {
         if (config.projectilePrefab != null && shootPoint != null)
         {
-            GameObject projectileObject = Instantiate(config.projectilePrefab, shootPoint.position, Quaternion.identity); 
+            GameObject projectileObject = Instantiate(config.projectilePrefab, shootPoint.position, shootPoint.rotation);
             Projectile projectile = projectileObject.GetComponent<Projectile>();
 
             if (projectile != null)
             {
-                projectile.targetEnemy = target;
-                projectile.targetPosition = target.transform.position;
-                projectile.config = config.projectilePrefab.GetComponent<Projectile>().config;
+                Vector3 direction = (target.transform.position - shootPoint.position).normalized;
+                projectile.Launch(direction);
             }
         }
     }

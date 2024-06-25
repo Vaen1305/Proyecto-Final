@@ -7,4 +7,5 @@ public class TowerConfig : ScriptableObject
     public float attackSpeed;
     public GameObject projectilePrefab;
     public int price;
+    public float rotationSpeed;
 }
