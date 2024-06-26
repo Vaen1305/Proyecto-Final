@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee2c9a839c0e3048b40c46155c461ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 0
-  Level: 0
+  score: 0
+  level: 0
 --- !u!4 &31872118
 Transform:
   m_ObjectHideFlags: 0
@@ -3344,15 +3344,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4da14ac9f4b1f6458f23b988c0c3dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waves:
-  - enemies:
-    - enemyPrefab: {fileID: 1630136878245239269, guid: cbab0c8aaea205746a8d4e6eb9d3aa0d,
-        type: 3}
-      count: 8
-  - enemies:
-    - enemyPrefab: {fileID: 7535894456042708345, guid: 02db3b94bce30e143b384ad3710e43ce,
-        type: 3}
-      count: 4
   spawnPoints:
   - {fileID: 2007695405}
   enemyCount: 0
@@ -3376,6 +3367,9 @@ MonoBehaviour:
   spawnInterval: 1
   sceneLight: {fileID: 410087040}
   colorChangeDuration: 0.1
+  enemyPrefabs:
+  - {fileID: 1630136878245239269, guid: cbab0c8aaea205746a8d4e6eb9d3aa0d, type: 3}
+  - {fileID: 7535894456042708345, guid: 02db3b94bce30e143b384ad3710e43ce, type: 3}
 --- !u!4 &1539107159
 Transform:
   m_ObjectHideFlags: 0
@@ -4562,7 +4556,7 @@ MonoBehaviour:
         m_MethodName: SetTowerToPlace
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 366352677008151780, guid: c368563f63b590c46abc3a106e81973d,
+          m_ObjectArgument: {fileID: 531587370625070158, guid: f81c45afee0bec1408b666c02cda2483,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
           m_IntArgument: 0

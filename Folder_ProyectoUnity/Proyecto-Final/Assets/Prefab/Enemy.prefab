@@ -123,6 +123,7 @@ MonoBehaviour:
     speed: 4.46
     health: 100
     damage: 12
+    pointsOnDeath: 30
   waypoints:
   - {fileID: 8607369848115258234, guid: 6c37cc99e7006db4f8106041f41b206b, type: 3}
   - {fileID: 920471628572972208, guid: 506189a8d675f0c4f8c2893f7fb10774, type: 3}

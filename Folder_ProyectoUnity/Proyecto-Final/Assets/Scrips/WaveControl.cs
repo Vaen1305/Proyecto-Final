@@ -6,7 +6,6 @@ using DG.Tweening;
 
 public class WaveController : MonoBehaviour
 {
-    public List<Wave> waves;
     public Transform[] spawnPoints;
     public int enemyCount;
     public int currentWave = 0;
@@ -15,6 +14,9 @@ public class WaveController : MonoBehaviour
     public float spawnInterval = 1f;
     public Light sceneLight;
     public float colorChangeDuration = 1.0f;
+    public GameObject[] enemyPrefabs;
+
+
     public static WaveController Instance { get; private set; }
 
     private void Awake()
@@ -40,15 +42,24 @@ public class WaveController : MonoBehaviour
 
     public void StartWave()
     {
-        if (currentWave >= waves.Count)
-        {
-            return;
-        }
-
         AnimateLightChange();
 
-        StartCoroutine(SpawnWave(waves[currentWave]));
+        Wave newWave = GenerateWave(currentWave + 1);
+        StartCoroutine(SpawnWave(newWave));
         ++currentWave;
+    }
+    private Wave GenerateWave(int waveNumber)
+    {
+        SimplyLinkedList<EnemyType> enemies = new SimplyLinkedList<EnemyType>();
+        int enemyCount = waveNumber * 5;
+
+        for (int i = 0; i < enemyCount; ++i)
+        {
+            int randomIndex = Random.Range(0, enemyPrefabs.Length);
+            enemies.InsertNodeAtEnd(new EnemyType(enemyPrefabs[randomIndex], 1));
+        }
+
+        return new Wave(enemies);
     }
     private void AnimateLightChange()
     {
@@ -61,7 +72,7 @@ public class WaveController : MonoBehaviour
     {
         for (int i = 0; i < wave.enemies.Count; ++i)
         {
-            EnemyType enemyType = wave.enemies[i];
+            EnemyType enemyType = wave.enemies.Get(i);
             for (int j = 0; j < enemyType.count; ++j)
             {
                 Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
@@ -78,15 +89,6 @@ public class WaveController : MonoBehaviour
         if (enemyCount <= 0)
         {
             onWaveCompleted.Invoke();
-
-            if (currentWave < waves.Count)
-            {
-
-            }
-            else
-            {
-
-            }
         }
     }
 

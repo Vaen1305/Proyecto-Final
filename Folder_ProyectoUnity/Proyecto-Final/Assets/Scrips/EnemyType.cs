@@ -7,4 +7,9 @@ public class EnemyType
 {
     public GameObject enemyPrefab;
     public int count;
+    public EnemyType(GameObject prefab, int count)
+    {
+        this.enemyPrefab = prefab;
+        this.count = count;
+    }
 }

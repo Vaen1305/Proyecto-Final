@@ -40,7 +40,7 @@ public class AreaEffectProjectile : MonoBehaviour
     void Explode()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, config.explosionRadius);
-        for (int i = 0; i < hitColliders.Length; i++)
+        for (int i = 0; i < hitColliders.Length; ++i)
         {
             EnemyControl enemyControl = hitColliders[i].GetComponent<EnemyControl>();
             if (enemyControl != null)

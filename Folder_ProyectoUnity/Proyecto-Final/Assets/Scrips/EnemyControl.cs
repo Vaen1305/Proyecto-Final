@@ -47,9 +47,16 @@ public class EnemyControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (stats.health <= 0)
+        {
+            Die();
+        }
     }
-
-
+    void Die()
+    {
+        GameManager.Instance.AddScore(stats.pointsOnDeath);
+        Destroy(gameObject);
+    }
 
     void OnDestroy()
     {

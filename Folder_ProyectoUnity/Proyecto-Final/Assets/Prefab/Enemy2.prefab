@@ -120,9 +120,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-    speed: 9
+    speed: 11.72
     health: 4
     damage: 14
+    pointsOnDeath: 25
   waypoints:
   - {fileID: 1902882854937215638, guid: 1508902942154484789db91ef52bad0a, type: 3}
   speedCurve:

@@ -5,6 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class Wave
 {
-    public List<EnemyType> enemies;
-}
+    public SimplyLinkedList<EnemyType> enemies;
 
+    public Wave(SimplyLinkedList<EnemyType> enemies)
+    {
+        this.enemies = enemies;
+    }
+}
