@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
     }
     public void ScenePlay()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Game1");
     }
     public void Pausa()
     {

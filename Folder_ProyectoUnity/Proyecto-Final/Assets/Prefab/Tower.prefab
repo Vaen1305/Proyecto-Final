@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6992014110811673053}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4956240905212279924, guid: 784d45c8710cbfe4aa8213cbe3b06aae, type: 3}
 --- !u!23 &1979796916691507378
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -120,3 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 5dfd01b82267bcc4d95ee1bb1cd223c3, type: 2}
   isPlaced: 0
+  shootPoint: {fileID: 0}

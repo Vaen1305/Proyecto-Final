@@ -66,6 +66,7 @@ public class TeslaTower : Tower
             {
                 Attack(enemyControl.gameObject);
                 positions.InsertNodeAtEnd(enemyControl.transform.position);
+                enemiesInRange.Enqueue(enemyControl, enemyControl.stats.health);
             }
         }
 
