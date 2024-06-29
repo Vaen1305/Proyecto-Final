@@ -65,7 +65,7 @@ public class InfernalTower : Tower
             enemyControl.TakeDamage(gameObject, damageToApply);
         }
 
-        DrawLightning(transform.position, target.transform.position);
+        DrawLightning(shootPoint.position, target.transform.position);
     }
 
     private void DrawLightning(Vector3 start, Vector3 end)

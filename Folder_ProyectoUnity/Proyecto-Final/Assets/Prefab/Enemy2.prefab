@@ -120,12 +120,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-    speed: 11.72
-    health: 4
-    damage: 14
-    pointsOnDeath: 25
+    speed: 21
+    health: 69
+    damage: 1
+    pointsOnDeath: 10
   waypoints:
-  - {fileID: 1902882854937215638, guid: 1508902942154484789db91ef52bad0a, type: 3}
+  - {fileID: 6374184028670801186, guid: 57c7cc63e9d62654fbddf3210047ede7, type: 3}
+  - {fileID: 3156529414862509712, guid: 03300ee0221867e45afa2e9a21a535f6, type: 3}
+  - {fileID: 6604574394852541424, guid: eb0457bbcb0d42b429df1e6e06f3a56e, type: 3}
+  - {fileID: 2895285539641437316, guid: cb4e32b18dd13e94199940759e73b0b0, type: 3}
+  - {fileID: 7860103391458304682, guid: 0c4f30ef9b8541a4f968fc01f3eed44f, type: 3}
+  - {fileID: 5927527437316708634, guid: a8b1119105392cf4fab64c2f3646dfd5, type: 3}
+  - {fileID: 1400884785930341799, guid: 522d54ae31f31674f9f94f2eefb604aa, type: 3}
+  - {fileID: 6893495511112684932, guid: 19998fc222c20874bba3ba24e3722334, type: 3}
+  - {fileID: 7996943389637120080, guid: b7d446aa820d69c42b9b4a92053bd7ad, type: 3}
   speedCurve:
     serializedVersion: 2
     m_Curve:

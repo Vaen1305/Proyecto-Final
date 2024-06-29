@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnemyControl : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class EnemyControl : MonoBehaviour
     private float timeSinceStart = 0f;
 
     public AnimationCurve speedCurve;
+
+    public static event Action<int> OnEnemyDeath;
 
     void Start()
     {
@@ -32,9 +35,17 @@ public class EnemyControl : MonoBehaviour
 
         float adjustedSpeed = stats.speed * speedCurve.Evaluate(timeSinceStart);
 
+        Vector3 direction = (target.position - transform.position).normalized;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.deltaTime * 10f);
+        }
+
         transform.position = Vector3.MoveTowards(transform.position, target.position, adjustedSpeed * Time.deltaTime);
 
-        if (transform.position == target.position)
+        if (Vector3.Distance(transform.position, target.position) < 0.1f)
         {
             ++currentWaypointIndex;
         }
@@ -45,21 +56,29 @@ public class EnemyControl : MonoBehaviour
         stats.health -= damage;
         if (stats.health <= 0)
         {
+            Die();
             Destroy(gameObject);
         }
-        if (stats.health <= 0)
-        {
-            Die();
-        }
     }
+
     void Die()
     {
+        OnEnemyDeath?.Invoke(stats.pointsOnDeath);
         GameManager.Instance.AddScore(stats.pointsOnDeath);
-        Destroy(gameObject);
+        GiveMoneyToPlayer(stats.pointsOnDeath);
     }
 
     void OnDestroy()
     {
         WaveController.Instance.OnEnemyDestroyed();
+    }
+
+    void GiveMoneyToPlayer(int amount)
+    {
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player != null)
+        {
+            player.AddMoney(amount);
+        }
     }
 }

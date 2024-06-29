@@ -8,7 +8,7 @@ public class Tower : MonoBehaviour
     public bool isPlaced = false;
     protected GameObject target;
     protected float attackTimer = 0f;
-    public Transform shootPoint;
+    [SerializeField] protected Transform shootPoint;
 
     void Update()
     {

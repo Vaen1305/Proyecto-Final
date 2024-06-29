@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,13 +14,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float Speed;
     [SerializeField] private float Sensitivity;
 
-    public int Health 
+    public int Health
     {
         get { return health; }
         set { health = value; }
     }
 
-    public int Money 
+    public int Money
     {
         get { return money; }
         set { money = value; }
@@ -31,6 +29,11 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        CastleCollision.OnEnemyCollision += TakeDamage;
+    }
+    private void OnDestroy()
+    {
+        CastleCollision.OnEnemyCollision -= TakeDamage;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -81,6 +84,7 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up, PlayerMouseInput.x * Sensitivity);
         PlayerCamera.transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
     }
+
     public bool CanAfford(int amount)
     {
         return Money >= amount;
@@ -97,5 +101,15 @@ public class PlayerController : MonoBehaviour
     public void AddMoney(int amount)
     {
         Money += amount;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
+        if (Health <= 0)
+        {
+            Health = 0;
+            GameManager.Instance.GameOver();
+        }
     }
 }

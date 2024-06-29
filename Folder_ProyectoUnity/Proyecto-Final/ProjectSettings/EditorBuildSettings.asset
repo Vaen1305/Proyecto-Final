@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenas/Game1.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenas/Derrota.unity
-    guid: 45672cbb196a8da4e92ce7ac90c54160
+    path: Assets/Scenas/GameOverScene.unity
+    guid: bffad18e47e9233428bac0030fa91eed
   m_configObjects: {}

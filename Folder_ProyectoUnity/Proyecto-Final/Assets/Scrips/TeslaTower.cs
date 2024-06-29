@@ -59,7 +59,8 @@ public class TeslaTower : Tower
         SimplyLinkedList<Vector3> positions = new SimplyLinkedList<Vector3>();
         positions.InsertNodeAtEnd(transform.position);
 
-        for (int i = 0; i < enemiesInRange.Count; i++)
+        int count = enemiesInRange.Count;
+        for (int i = 0; i < count; i++)
         {
             EnemyControl enemyControl = enemiesInRange.Dequeue();
             if (enemyControl != null && enemyControl.stats.health > 0)
