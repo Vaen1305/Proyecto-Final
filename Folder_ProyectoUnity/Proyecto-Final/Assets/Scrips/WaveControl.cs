@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
@@ -15,7 +14,6 @@ public class WaveController : MonoBehaviour
     public Light sceneLight;
     public float colorChangeDuration = 1.0f;
     public GameObject[] enemyPrefabs;
-
 
     public static WaveController Instance { get; private set; }
 
@@ -37,17 +35,17 @@ public class WaveController : MonoBehaviour
         {
             onWaveCompleted = new UnityEvent();
         }
-
+        onWaveCompleted.AddListener(OnWaveCompleted);
     }
 
     public void StartWave()
     {
         AnimateLightChange();
-
         Wave newWave = GenerateWave(currentWave + 1);
         StartCoroutine(SpawnWave(newWave));
         ++currentWave;
     }
+
     private Wave GenerateWave(int waveNumber)
     {
         SimplyLinkedList<EnemyType> enemies = new SimplyLinkedList<EnemyType>();
@@ -61,11 +59,11 @@ public class WaveController : MonoBehaviour
 
         return new Wave(enemies);
     }
+
     private void AnimateLightChange()
     {
         sceneLight.DOIntensity(1.5f, colorChangeDuration).SetLoops(2, LoopType.Yoyo);
-
-        sceneLight.DOColor(Color.red, colorChangeDuration).SetLoops(2, LoopType.Yoyo);
+        sceneLight.DOColor(Color.blue, colorChangeDuration).SetLoops(2, LoopType.Yoyo);
     }
 
     private IEnumerator SpawnWave(Wave wave)
@@ -99,5 +97,10 @@ public class WaveController : MonoBehaviour
         {
             EndWave();
         }
+    }
+
+    private void OnWaveCompleted()
+    {
+        GameManager.Instance.IncrementLevel();
     }
 }

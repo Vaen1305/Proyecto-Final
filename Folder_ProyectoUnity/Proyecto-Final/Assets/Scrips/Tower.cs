@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
@@ -31,7 +29,7 @@ public class Tower : MonoBehaviour
         }
     }
 
-    private void RotateTowardsTarget(GameObject target)
+    protected void RotateTowardsTarget(GameObject target)
     {
         Vector3 direction = (target.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);

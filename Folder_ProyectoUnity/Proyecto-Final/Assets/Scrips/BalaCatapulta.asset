@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0903c5a348744d4185b72e0721a1940, type: 3}
   m_Name: BalaCatapulta
   m_EditorClassIdentifier: 
-  speed: 10
-  damage: 20
-  explosionRadius: 10
-  gravity: 9.8
+  speed: 13
+  damage: 50
+  explosionRadius: 5
+  gravity: 9.81

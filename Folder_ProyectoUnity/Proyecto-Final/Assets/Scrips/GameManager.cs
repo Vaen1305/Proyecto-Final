@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int score = 0;
     [SerializeField] private int level = 1;
-    private SimplyLinkedList<int> highScores = new SimplyLinkedList<int>();
+    [SerializeField] private HighScoreData highScoreData;
 
     private void Awake()
     {
@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadHighScores();
         }
     }
 
@@ -39,67 +38,63 @@ public class GameManager : MonoBehaviour
         return level;
     }
 
+    public void IncrementLevel()
+    {
+        level++;
+        UIManager.Instance.UpdateLevelUI(level);
+    }
+
+    public void ResetScore()
+    {
+        score = 0;
+        level = 1;
+    }
+
+    public void GameOver()
+    {
+        SaveScore();
+        SceneManager.LoadScene("GameOverScene");
+    }
+
+    public SimplyLinkedList<int> GetHighScores()
+    {
+        return highScoreData.highScores;
+    }
+
     private void SaveScore()
     {
         if (IsHighScore(score))
         {
             InsertScore(score);
-            SaveHighScores();
+            SortHighScores();
         }
-    }
-
-    private void LoadHighScores()
-    {
-        highScores = new SimplyLinkedList<int>();
-        for (int i = 0; i < 10; ++i)
-        {
-            if (PlayerPrefs.HasKey("HighScore" + i))
-            {
-                highScores.InsertNodeAtEnd(PlayerPrefs.GetInt("HighScore" + i));
-            }
-        }
-        SortHighScores();
-    }
-
-    private void SaveHighScores()
-    {
-        for (int i = 0; i < highScores.Count; ++i)
-        {
-            PlayerPrefs.SetInt("HighScore" + i, highScores.Get(i));
-        }
-        PlayerPrefs.Save();
-    }
-
-    public SimplyLinkedList<int> GetHighScores()
-    {
-        return highScores;
     }
 
     private void InsertScore(int newScore)
     {
-        highScores.InsertNodeAtEnd(newScore);
+        highScoreData.highScores.InsertNodeAtEnd(newScore);
         SortHighScores();
-        if (highScores.Count > 10)
+        if (highScoreData.highScores.Count > 10)
         {
             SimplyLinkedList<int> truncatedList = new SimplyLinkedList<int>();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; ++i)
             {
-                truncatedList.InsertNodeAtEnd(highScores.Get(i));
+                truncatedList.InsertNodeAtEnd(highScoreData.highScores.Get(i));
             }
-            highScores = truncatedList;
+            highScoreData.highScores = truncatedList;
         }
     }
 
     private bool IsHighScore(int newScore)
     {
-        if (highScores.Count < 10)
+        if (highScoreData.highScores.Count < 10)
         {
             return true;
         }
 
-        for (int i = 0; i < highScores.Count; i++)
+        for (int i = 0; i < highScoreData.highScores.Count; ++i)
         {
-            if (newScore > highScores.Get(i))
+            if (newScore > highScoreData.highScores.Get(i))
             {
                 return true;
             }
@@ -110,38 +105,20 @@ public class GameManager : MonoBehaviour
     private void SortHighScores()
     {
         List<int> scores = new List<int>();
-        for (int i = 0; i < highScores.Count; i++)
+        for (int i = 0; i < highScoreData.highScores.Count; ++i)
         {
-            scores.Add(highScores.Get(i));
+            scores.Add(highScoreData.highScores.Get(i));
         }
         scores.Sort((a, b) => b.CompareTo(a));
-        highScores = new SimplyLinkedList<int>();
-        for (int i = 0; i < scores.Count; i++)
+        highScoreData.highScores = new SimplyLinkedList<int>();
+        for (int i = 0; i < scores.Count; ++i)
         {
-            highScores.InsertNodeAtEnd(scores[i]);
+            highScoreData.highScores.InsertNodeAtEnd(scores[i]);
         }
-    }
-
-    /*public void LoadNextScene(string sceneName)
-    {
-        SaveScore();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
-    }*/
-
-    public void ResetScore()
-    {
-        score = 0;
-    }
-
-    public void GameOver()
-    {
-        SaveScore();
-        SceneManager.LoadScene("GameOverScene");
     }
     public void BorrarTodo()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
-        Debug.Log("Todos los PlayerPrefs han sido borrados.");
+        highScoreData.highScores = new SimplyLinkedList<int>();
+        Debug.Log("Todos los puntajes han sido borrados.");
     }
 }

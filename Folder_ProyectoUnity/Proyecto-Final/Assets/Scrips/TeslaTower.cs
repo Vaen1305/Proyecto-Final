@@ -57,10 +57,10 @@ public class TeslaTower : Tower
     private void AttackAllEnemies()
     {
         SimplyLinkedList<Vector3> positions = new SimplyLinkedList<Vector3>();
-        positions.InsertNodeAtEnd(transform.position);
+        positions.InsertNodeAtEnd(shootPoint.position);
 
         int count = enemiesInRange.Count;
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count; ++i)
         {
             EnemyControl enemyControl = enemiesInRange.Dequeue();
             if (enemyControl != null && enemyControl.stats.health > 0)
@@ -90,7 +90,7 @@ public class TeslaTower : Tower
         if (lineRenderer != null)
         {
             Vector3[] positionArray = new Vector3[positions.Count];
-            for (int i = 0; i < positions.Count; i++)
+            for (int i = 0; i < positions.Count; ++i)
             {
                 positionArray[i] = positions.Get(i);
             }

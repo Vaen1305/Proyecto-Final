@@ -1854,7 +1854,7 @@ GameObject:
   - component: {fileID: 1188574453}
   - component: {fileID: 1188574452}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1874,6 +1874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   level: 0
+  highScoreData: {fileID: 11400000, guid: ec5c7eeee7a719446a1919a5fffa1e35, type: 2}
 --- !u!4 &1188574453
 Transform:
   m_ObjectHideFlags: 0

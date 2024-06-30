@@ -28,7 +28,7 @@ public class TowerControl : MonoBehaviour
         {
             Ray camaray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(camaray, out RaycastHit hitInfo, 10000f, LayerMask))
+            if (Physics.Raycast(camaray, out RaycastHit hitInfo, 1000f, LayerMask))
             {
                 Transform closestPoint = GetClosestPlacementPoint(hitInfo.point);
                 Vector3 newPosition = hitInfo.point;

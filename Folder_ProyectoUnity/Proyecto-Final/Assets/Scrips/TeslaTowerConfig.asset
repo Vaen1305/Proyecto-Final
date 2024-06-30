@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421463fea2024c94f963b09c5d73daa0, type: 3}
   m_Name: TeslaTowerConfig
   m_EditorClassIdentifier: 
-  attackRange: 115.1
+  attackRange: 79.6
   attackSpeed: 1.12
   projectilePrefab: {fileID: 0}
   price: 50

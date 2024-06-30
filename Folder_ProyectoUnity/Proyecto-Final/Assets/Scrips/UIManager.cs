@@ -60,11 +60,16 @@ public class UIManager : MonoBehaviour
         levelText.text = "Level: " + GameManager.Instance.GetLevel().ToString();
     }
 
+    public void UpdateLevelUI(int newLevel)
+    {
+        levelText.text = "Level: " + newLevel.ToString();
+    }
+
     public void DisplayHighScores()
     {
         SimplyLinkedList<int> highScores = GameManager.Instance.GetHighScores();
 
-        for (int i = 0; i < highScoreTexts.Count; i++)
+        for (int i = 0; i < highScoreTexts.Count; ++i)
         {
             if (i < highScores.Count)
             {

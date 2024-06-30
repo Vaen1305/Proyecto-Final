@@ -6,13 +6,33 @@ public class CatapultTower : Tower
 {
     public AreaEffectProjectileConfig areaEffectProjectileConfig;
 
+    void Start()
+    {
+        if (areaEffectProjectileConfig == null)
+        {
+            return;
+        }
+    }
+
     protected override void Attack(GameObject target)
     {
-        GameObject projectileObject = Instantiate(config.projectilePrefab, transform.position, Quaternion.identity);
+        if (config.projectilePrefab == null)
+        {
+            return;
+        }
+
+        if (shootPoint == null)
+        {
+            return;
+        }
+
+        GameObject projectileObject = Instantiate(config.projectilePrefab, shootPoint.position, shootPoint.rotation);
         AreaEffectProjectile projectile = projectileObject.GetComponent<AreaEffectProjectile>();
-        projectile.config = areaEffectProjectileConfig;
-        projectile.targetPosition = target.transform.position;
-        projectile.targetEnemy = target;
+
+        if (projectile != null)
+        {
+            projectile.config = areaEffectProjectileConfig;
+            projectile.targetPosition = target.transform.position;
+        }
     }
 }
-    

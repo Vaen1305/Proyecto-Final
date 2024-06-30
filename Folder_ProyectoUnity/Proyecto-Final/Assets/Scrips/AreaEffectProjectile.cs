@@ -6,35 +6,67 @@ public class AreaEffectProjectile : MonoBehaviour
 {
     public AreaEffectProjectileConfig config;
     public Vector3 targetPosition;
-    public GameObject targetEnemy;
     private Vector3 initialPosition;
-    private float travelTime;
+    private Vector3 velocity;
     private float elapsedTime;
 
     void Start()
     {
+        if (config == null)
+        {
+            return;
+        }
+
         initialPosition = transform.position;
-        travelTime = (targetPosition - initialPosition).magnitude / config.speed;
+        Vector3 toTarget = targetPosition - initialPosition;
+
+        float horizontalDistance = new Vector2(toTarget.x, toTarget.z).magnitude;
+        float verticalDistance = toTarget.y;
+        float initialHeight = initialPosition.y;
+
+        float desiredElevationFactor = 1.5f;
+        float timeToReachTarget = horizontalDistance / config.speed;
+        float adjustedVerticalDistance = verticalDistance + (desiredElevationFactor * Mathf.Abs(verticalDistance));
+        float launchAngle = Mathf.Atan((adjustedVerticalDistance + 0.5f * config.gravity * timeToReachTarget * timeToReachTarget) / horizontalDistance);
+        float launchSpeedY = config.speed * Mathf.Sin(launchAngle);
+        float launchSpeedXZ = config.speed * Mathf.Cos(launchAngle);
+
+        velocity = new Vector3(toTarget.x / horizontalDistance * launchSpeedXZ, launchSpeedY, toTarget.z / horizontalDistance * launchSpeedXZ);
+
     }
 
     void Update()
     {
+        if (config == null)
+        {
+            return;
+        }
+
         elapsedTime += Time.deltaTime;
 
-        float t = elapsedTime / travelTime;
-        if (t > 1f) t = 1f;
+        Vector3 displacement = velocity * elapsedTime;
+        displacement.y -= 0.5f * config.gravity * elapsedTime * elapsedTime;
+        Vector3 newPosition = initialPosition + displacement;
 
-        float x = Mathf.Lerp(initialPosition.x, targetPosition.x, t);
-        float y = Mathf.Lerp(initialPosition.y, targetPosition.y, t) - 0.5f * config.gravity * t * t;
-        float z = Mathf.Lerp(initialPosition.z, targetPosition.z, t);
+        transform.position = newPosition;
 
-        transform.position = new Vector3(x, y, z);
-
-        if (t >= 1f)
+        if (transform.position.y <= 0.5f) 
         {
             Explode();
             Destroy(gameObject);
         }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Explode();
+        Destroy(gameObject);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Explode();
+        Destroy(gameObject);
     }
 
     void Explode()
@@ -45,17 +77,8 @@ public class AreaEffectProjectile : MonoBehaviour
             EnemyControl enemyControl = hitColliders[i].GetComponent<EnemyControl>();
             if (enemyControl != null)
             {
-                enemyControl.TakeDamage(hitColliders[i].gameObject, config.damage);
+                enemyControl.TakeDamage(gameObject, config.damage);
             }
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == targetEnemy)
-        {
-            Explode();
-            Destroy(gameObject);
         }
     }
 }

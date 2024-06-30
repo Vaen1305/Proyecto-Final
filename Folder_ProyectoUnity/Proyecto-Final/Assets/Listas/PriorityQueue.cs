@@ -51,7 +51,7 @@ public class PriorityQueue<T>
     {
         if (head == null)
         {
-            throw new InvalidOperationException("The queue is empty.");
+            throw new InvalidOperationException("");
         }
         T value = head.Value;
         head = head.Next;
