@@ -6802,8 +6802,8 @@ MonoBehaviour:
   sceneLight: {fileID: 1390025069}
   colorChangeDuration: 0.25
   enemyPrefabs:
-  - {fileID: 7535894456042708345, guid: 02db3b94bce30e143b384ad3710e43ce, type: 3}
   - {fileID: 6562497839400247467, guid: e381fe987b067964d9cc16dd2cf9b758, type: 3}
+  - {fileID: 5843601414657855727, guid: ce09ce89675278443afc94a1f1cdd7ac, type: 3}
 --- !u!4 &1334220440
 Transform:
   m_ObjectHideFlags: 0
