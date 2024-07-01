@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e333cf5aacb1f6d45b1c8098860f9736, type: 3}
   m_Name: Tower
   m_EditorClassIdentifier: 
-  attackRange: 78
-  attackSpeed: 4
+  attackRange: 37.2
+  attackSpeed: 1.26
   projectilePrefab: {fileID: 5748356383537629176, guid: 7db5c9dafd726c743b34e1b086f41652,
     type: 3}
   price: 50

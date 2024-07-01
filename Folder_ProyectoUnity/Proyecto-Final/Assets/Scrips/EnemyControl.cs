@@ -28,6 +28,14 @@ public class EnemyControl : MonoBehaviour
         {
             currentNode = graph.GetNode(0);
         }
+
+        Projectile.OnHitEnemy += HandleHitByProjectile;
+    }
+
+    void OnDestroy()
+    {
+        Projectile.OnHitEnemy -= HandleHitByProjectile;
+        WaveController.Instance.OnEnemyDestroyed();
     }
 
     void Update()
@@ -85,7 +93,7 @@ public class EnemyControl : MonoBehaviour
                 InitializeType3Graph();
                 break;
             default:
-                Debug.LogError("Unknown enemy type: " + enemyType);
+
                 break;
         }
     }
@@ -184,7 +192,15 @@ public class EnemyControl : MonoBehaviour
         graph.AddNode(node9);
     }
 
-    public void TakeDamage(GameObject source, int damage)
+    private void HandleHitByProjectile(GameObject enemy, int damage)
+    {
+        if (enemy == this.gameObject)
+        {
+            TakeDamage(damage);
+        }
+    }
+
+    public void TakeDamage(int damage)
     {
         stats.health -= damage;
         if (stats.health <= 0)
@@ -199,11 +215,6 @@ public class EnemyControl : MonoBehaviour
         OnEnemyDeath?.Invoke(stats.pointsOnDeath);
         GameManager.Instance.AddScore(stats.pointsOnDeath);
         GiveMoneyToPlayer(stats.pointsOnDeath);
-    }
-
-    void OnDestroy()
-    {
-        WaveController.Instance.OnEnemyDestroyed();
     }
 
     void GiveMoneyToPlayer(int amount)

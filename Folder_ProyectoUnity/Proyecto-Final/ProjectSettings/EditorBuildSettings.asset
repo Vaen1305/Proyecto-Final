@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenas/Inicio.unity
     guid: c4b96d3c76bc7b54d93209efaa9d2697
   - enabled: 1
-    path: Assets/Scenas/Game.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
     path: Assets/Scenas/Game1.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenas/GameOverScene.unity
     guid: bffad18e47e9233428bac0030fa91eed
+  - enabled: 1
+    path: Assets/Scenas/Creditos.unity
+    guid: 3e84422752a1bcf41a85d6321dbef7e1
   m_configObjects: {}

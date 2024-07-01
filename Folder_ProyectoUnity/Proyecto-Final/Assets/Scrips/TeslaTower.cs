@@ -81,7 +81,7 @@ public class TeslaTower : Tower
         if (enemyControl != null)
         {
             int damageToApply = Mathf.RoundToInt(teslaTowerConfig.fixedDamage);
-            enemyControl.TakeDamage(gameObject, damageToApply);
+            enemyControl.TakeDamage(damageToApply);
         }
     }
 

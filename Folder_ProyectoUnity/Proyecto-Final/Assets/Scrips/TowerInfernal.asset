@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 421463fea2024c94f963b09c5d73daa0, type: 3}
-  m_Name: TeslaTowerConfig
+  m_Script: {fileID: 11500000, guid: e333cf5aacb1f6d45b1c8098860f9736, type: 3}
+  m_Name: TowerInfernal
   m_EditorClassIdentifier: 
-  attackRange: 37.9
-  attackSpeed: 1.12
+  attackRange: 32.2
+  attackSpeed: 0
   projectilePrefab: {fileID: 0}
-  price: 200
+  price: 150
   rotationSpeed: 0
-  fixedDamage: 37.1
-  attackCooldown: 4.02

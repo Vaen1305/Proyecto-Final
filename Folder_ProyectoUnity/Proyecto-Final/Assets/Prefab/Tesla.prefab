@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d90ad7c21ddfaa4ea64427980b4f01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 5dfd01b82267bcc4d95ee1bb1cd223c3, type: 2}
+  config: {fileID: 11400000, guid: 4f1d43866977c5c43b7e4e4fba8dff65, type: 2}
   isPlaced: 0
   shootPoint: {fileID: 965314268493974868}
   teslaTowerConfig: {fileID: 11400000, guid: 4f1d43866977c5c43b7e4e4fba8dff65, type: 2}

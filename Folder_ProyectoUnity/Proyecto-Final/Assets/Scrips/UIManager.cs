@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
         if (playerController == null)
         {
-            Debug.LogWarning("PlayerController not found");
+
         }
 
         if (SceneManager.GetActiveScene().name == "GameOverScene")
@@ -57,12 +57,12 @@ public class UIManager : MonoBehaviour
         healthText.text = "Health: " + playerController.Health.ToString();
         moneyText.text = "Money: " + playerController.Money.ToString();
         scoreText.text = "Score: " + GameManager.Instance.GetScore().ToString();
-        levelText.text = "Level: " + GameManager.Instance.GetLevel().ToString();
+        levelText.text = "Oleada: " + GameManager.Instance.GetLevel().ToString();
     }
 
     public void UpdateLevelUI(int newLevel)
     {
-        levelText.text = "Level: " + newLevel.ToString();
+        levelText.text = "Oleada: " + newLevel.ToString();
     }
 
     public void DisplayHighScores()
@@ -124,5 +124,9 @@ public class UIManager : MonoBehaviour
     public void BorrarTodo()
     {
         GameManager.Instance.BorrarTodo();
+    }
+    public void Creditos()
+    {
+        SceneManager.LoadScene("Creditos");
     }
 }

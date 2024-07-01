@@ -5008,7 +5008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5c6bcc95423c2468c5c68ff1e43f11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 5dfd01b82267bcc4d95ee1bb1cd223c3, type: 2}
+  config: {fileID: 11400000, guid: ca9a1534bae5fae4688f83bfb1720c94, type: 2}
   isPlaced: 0
   shootPoint: {fileID: 7814498400874597354}
   infernalTowerConfig: {fileID: 11400000, guid: 75d66bf7a0a082649b7b59cd63d41c62,

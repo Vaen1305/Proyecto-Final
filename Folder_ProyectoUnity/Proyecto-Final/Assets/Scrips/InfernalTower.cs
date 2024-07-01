@@ -62,7 +62,7 @@ public class InfernalTower : Tower
         if (enemyControl != null)
         {
             int damageToApply = Mathf.RoundToInt(currentDamage * Time.deltaTime * 10); 
-            enemyControl.TakeDamage(gameObject, damageToApply);
+            enemyControl.TakeDamage( damageToApply);
         }
 
         DrawLightning(shootPoint.position, target.transform.position);

@@ -57,14 +57,13 @@ public class AreaEffectProjectile : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        Explode();
-        Destroy(gameObject);
-    }
-
     void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Limite"))
+        {
+            Destroy(gameObject);
+            return;
+        }
         Explode();
         Destroy(gameObject);
     }
@@ -77,7 +76,7 @@ public class AreaEffectProjectile : MonoBehaviour
             EnemyControl enemyControl = hitColliders[i].GetComponent<EnemyControl>();
             if (enemyControl != null)
             {
-                enemyControl.TakeDamage(gameObject, config.damage);
+                enemyControl.TakeDamage(config.damage);
             }
         }
     }

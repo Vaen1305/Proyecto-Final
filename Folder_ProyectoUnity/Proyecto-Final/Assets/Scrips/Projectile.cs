@@ -5,10 +5,10 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public ProjectileConfig config;
-    public Vector3 direction;
+    private Vector3 direction;
 
     public delegate void OnHitEnemyHandler(GameObject enemy, int damage);
-    public event OnHitEnemyHandler OnHitEnemy;
+    public static event OnHitEnemyHandler OnHitEnemy;
 
     void Update()
     {
@@ -17,6 +17,12 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Limite"))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (other.CompareTag("Enemy"))
         {
             HandleHit(other.gameObject);
@@ -30,6 +36,7 @@ public class Projectile : MonoBehaviour
         {
             OnHitEnemy?.Invoke(targetEnemy, config.damage);
         }
+
         Destroy(gameObject);
     }
 

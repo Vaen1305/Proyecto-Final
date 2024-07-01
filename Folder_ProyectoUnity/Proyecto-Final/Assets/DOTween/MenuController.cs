@@ -1,19 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MenuController : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
-    public GameObject menu;
+    [SerializeField] private Image titleImage;
+    [SerializeField] private Button[] buttons;
+    [SerializeField] private float animationDuration = 3f; 
 
-    public void OpenMenu()
+    private void Awake()
     {
-        menu.SetActive(true);
+        DontDestroyOnLoad(this.gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public void CloseMenu()
+    private void OnDestroy()
     {
-        menu.SetActive(false);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Inicio")
+        {
+            AnimateTitle();
+            AnimateButtons();
+        }
+    }
+
+    private void AnimateTitle()
+    {
+        if (titleImage != null)
+        {
+            titleImage.rectTransform.DOKill();
+
+            titleImage.rectTransform.DOAnchorPosY(20, 1f).SetEase(Ease.InOutQuad).SetLoops(6, LoopType.Yoyo);
+        }
+    }
+
+    private void AnimateButtons()
+    {
+        if (buttons != null && buttons.Length > 0)
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                if (buttons[i] != null)
+                {
+                    buttons[i].transform.DOKill();
+
+                    buttons[i].transform.DOScale(1.1f, 0.5f).SetEase(Ease.InOutQuad).SetLoops(6, LoopType.Yoyo);
+                }
+            }
+        }
     }
 }
