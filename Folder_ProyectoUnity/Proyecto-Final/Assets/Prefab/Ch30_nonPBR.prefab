@@ -149,6 +149,17 @@ MonoBehaviour:
     health: 69
     damage: 1
     pointsOnDeath: 10
+  waypointPath:
+    waypoints:
+    - {fileID: 3268001846221248619, guid: 1886f600077fd404fa3f509b18621aae, type: 3}
+    - {fileID: 9005637314385992831, guid: 3fea78e96d75b7c47bb7d22b66d0c2df, type: 3}
+    - {fileID: 6509040207292600184, guid: 350a1f03366508e4f966840a04d888fa, type: 3}
+    - {fileID: 2184085194487992694, guid: 6642bd073fbd9eb44914acb690a85864, type: 3}
+    - {fileID: 7039181402279712502, guid: 82349dc126d060e46b2807f04aa52eb1, type: 3}
+    - {fileID: 4648541184105026826, guid: 7e0e6b4d5f35ff6448e6bc52ab5aa8cd, type: 3}
+    - {fileID: 5317008439691516519, guid: c3eb7e2117cf9d846820364fc3791eee, type: 3}
+    - {fileID: 1956496425880297723, guid: c99c87cd58d32104bb4123a0a4c9d763, type: 3}
+    - {fileID: 5617060306004122360, guid: 8f75a10020cec7644a01558e178a3425, type: 3}
   speedCurve:
     serializedVersion: 2
     m_Curve:

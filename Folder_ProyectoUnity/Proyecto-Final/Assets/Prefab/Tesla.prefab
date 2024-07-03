@@ -159,6 +159,9 @@ MonoBehaviour:
   shootPoint: {fileID: 965314268493974868}
   teslaTowerConfig: {fileID: 11400000, guid: 4f1d43866977c5c43b7e4e4fba8dff65, type: 2}
   lineRenderer: {fileID: 1365366267525079880}
+  Cpuntos: 25
+  dispersion: 1.01
+  frecuencia: 0.8
 --- !u!120 &1365366267525079880
 LineRenderer:
   serializedVersion: 2
@@ -180,7 +183,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: c566548144d8bfe40bec2083c418ba38, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -203,7 +206,9 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0.36, y: 0, z: 0.55}
+  - {x: -0.36, y: 0, z: 1.46}
+  - {x: 0, y: 0, z: 2.66}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -212,7 +217,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.3
         inSlope: 0
         outSlope: 0
         tangentMode: 0

@@ -16,5 +16,6 @@ MonoBehaviour:
   attackSpeed: 0
   projectilePrefab: {fileID: 0}
   price: 0
+  rotationSpeed: 0
   initialDamage: 5
-  damageIncreaseRate: 1
+  damageIncreaseRate: 7.03

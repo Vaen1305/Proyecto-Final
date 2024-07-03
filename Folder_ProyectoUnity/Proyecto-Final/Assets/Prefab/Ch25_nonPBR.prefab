@@ -152,8 +152,17 @@ MonoBehaviour:
   stats:
     speed: 8.96
     health: 100
-    damage: 2
+    damage: 3
     pointsOnDeath: 10
+  waypointPath:
+    waypoints:
+    - {fileID: 8556821867045902277, guid: cd0a660eae6681744be9040b2d030161, type: 3}
+    - {fileID: 6850038645737121237, guid: a95e17b78f534dc4db9974531d58993c, type: 3}
+    - {fileID: 309336120598264200, guid: df58e7a4ab7d53c4bb3d50f9d4be184f, type: 3}
+    - {fileID: 7618271070830857635, guid: d6acd2ca16770f344ac3de758ffec7f3, type: 3}
+    - {fileID: 3566340014377078722, guid: cf9fa0af259f06b4fa0beabcf05b3975, type: 3}
+    - {fileID: 5841707048419637605, guid: 3884cc0c0d496fb48aa98696177158a7, type: 3}
+    - {fileID: 2941689776459285546, guid: 01a91059fa616734f9b615d5fba2ce93, type: 3}
   speedCurve:
     serializedVersion: 2
     m_Curve:

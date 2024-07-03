@@ -18,4 +18,4 @@ MonoBehaviour:
   price: 200
   rotationSpeed: 0
   fixedDamage: 37.1
-  attackCooldown: 4.02
+  attackCooldown: 2.76

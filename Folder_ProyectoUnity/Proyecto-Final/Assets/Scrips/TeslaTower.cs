@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TeslaTower : Tower
@@ -7,6 +8,10 @@ public class TeslaTower : Tower
     private PriorityQueue<EnemyControl> enemiesInRange = new PriorityQueue<EnemyControl>();
     private float attackCooldown;
     private float timeSinceLastAttack;
+
+    public int Cpuntos;
+    public float dispersion;
+    public float frecuencia;
 
     void Start()
     {
@@ -94,8 +99,16 @@ public class TeslaTower : Tower
             {
                 positionArray[i] = positions.Get(i);
             }
-            lineRenderer.positionCount = positions.Count;
-            lineRenderer.SetPositions(positionArray);
+
+            List<Vector3> allInterpolatedPositions = new List<Vector3>();
+            for (int i = 0; i < positionArray.Length - 1; ++i)
+            {
+                List<Vector3> interpolatedPositions = InterpolarPuntos(positionArray[i], positionArray[i + 1], Cpuntos);
+                allInterpolatedPositions.AddRange(interpolatedPositions);
+            }
+
+            lineRenderer.positionCount = allInterpolatedPositions.Count;
+            lineRenderer.SetPositions(allInterpolatedPositions.ToArray());
             lineRenderer.enabled = true;
 
             Invoke("DisableLineRenderer", 0.1f);
@@ -133,5 +146,20 @@ public class TeslaTower : Tower
                 enemiesInRange.Remove(enemyControl);
             }
         }
+    }
+
+    private List<Vector3> InterpolarPuntos(Vector3 principio, Vector3 final, int totalPoints)
+    {
+        List<Vector3> list = new List<Vector3>();
+        for (int i = 0; i < totalPoints; ++i)
+        {
+            list.Add(Vector3.Lerp(principio, final, (float)i / totalPoints) + DesfaseAleatorio());
+        }
+        return list;
+    }
+
+    private Vector3 DesfaseAleatorio()
+    {
+        return Random.insideUnitSphere.normalized * Random.Range(0, dispersion);
     }
 }
