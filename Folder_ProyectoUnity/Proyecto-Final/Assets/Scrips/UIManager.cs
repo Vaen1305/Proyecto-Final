@@ -108,6 +108,7 @@ public class UIManager : MonoBehaviour
         menuOptionts.SetActive(false);
         ButtonOptionts.SetActive(true);
         Time.timeScale = 1f;
+        GameManager.Instance.ResetGame();
     }
 
     public void Exit()

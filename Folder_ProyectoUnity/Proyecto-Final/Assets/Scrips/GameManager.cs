@@ -121,4 +121,8 @@ public class GameManager : MonoBehaviour
         highScoreData.highScores = new SimplyLinkedList<int>();
         Debug.Log("Todos los puntajes han sido borrados.");
     }
+    public void ResetGame()
+    {
+        ResetScore();
+    }
 }
