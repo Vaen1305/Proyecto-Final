@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         xRot -= PlayerMouseInput.y * Sensitivity;
         transform.Rotate(Vector3.up, PlayerMouseInput.x * Sensitivity);
         PlayerCamera.transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
-    }
+    }//O(1)
 
     public bool CanAfford(int amount)
     {

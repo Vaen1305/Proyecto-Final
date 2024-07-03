@@ -17,23 +17,22 @@ public class AreaEffectProjectile : MonoBehaviour
             return;
         }
 
-        initialPosition = transform.position;
-        Vector3 toTarget = targetPosition - initialPosition;
+        initialPosition = transform.position;//O(1)
+        Vector3 toTarget = targetPosition - initialPosition;//O(1)
 
-        float horizontalDistance = new Vector2(toTarget.x, toTarget.z).magnitude;
-        float verticalDistance = toTarget.y;
-        float initialHeight = initialPosition.y;
+        float horizontalDistance = new Vector2(toTarget.x, toTarget.z).magnitude;//O(1)
+        float verticalDistance = toTarget.y;//O(1)
+        float initialHeight = initialPosition.y;//O(1)
 
-        float desiredElevationFactor = 1.5f;
-        float timeToReachTarget = horizontalDistance / config.speed;
-        float adjustedVerticalDistance = verticalDistance + (desiredElevationFactor * Mathf.Abs(verticalDistance));
-        float launchAngle = Mathf.Atan((adjustedVerticalDistance + 0.5f * config.gravity * timeToReachTarget * timeToReachTarget) / horizontalDistance);
-        float launchSpeedY = config.speed * Mathf.Sin(launchAngle);
-        float launchSpeedXZ = config.speed * Mathf.Cos(launchAngle);
+        float desiredElevationFactor = 1.5f;//O(1)
+        float timeToReachTarget = horizontalDistance / config.speed;//O(1)
+        float adjustedVerticalDistance = verticalDistance + (desiredElevationFactor * Mathf.Abs(verticalDistance));//O(1)
+        float launchAngle = Mathf.Atan((adjustedVerticalDistance + 0.5f * config.gravity * timeToReachTarget * timeToReachTarget) / horizontalDistance);//O(1)
+        float launchSpeedY = config.speed * Mathf.Sin(launchAngle);//O(1)
+        float launchSpeedXZ = config.speed * Mathf.Cos(launchAngle);//O(1)
 
-        velocity = new Vector3(toTarget.x / horizontalDistance * launchSpeedXZ, launchSpeedY, toTarget.z / horizontalDistance * launchSpeedXZ);
-
-    }
+        velocity = new Vector3(toTarget.x / horizontalDistance * launchSpeedXZ, launchSpeedY, toTarget.z / horizontalDistance * launchSpeedXZ);//O(1)
+    }//Tiempo Asintotico = O(1);
 
     void Update()
     {

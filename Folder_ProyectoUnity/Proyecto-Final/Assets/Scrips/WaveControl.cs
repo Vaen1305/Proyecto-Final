@@ -48,17 +48,17 @@ public class WaveController : MonoBehaviour
 
     private Wave GenerateWave(int waveNumber)
     {
-        SimplyLinkedList<EnemyType> enemies = new SimplyLinkedList<EnemyType>();
-        int enemyCount = waveNumber * 5;
+        SimplyLinkedList<EnemyType> enemies = new SimplyLinkedList<EnemyType>(); //O(1)
+        int enemyCount = waveNumber * 5; //O(1)
 
-        for (int i = 0; i < enemyCount; ++i)
+        for (int i = 0; i < enemyCount; ++i) //O(n)
         {
-            int randomIndex = Random.Range(0, enemyPrefabs.Length);
-            enemies.InsertNodeAtEnd(new EnemyType(enemyPrefabs[randomIndex], 1));
+            int randomIndex = Random.Range(0, enemyPrefabs.Length); //O(1)
+            enemies.InsertNodeAtEnd(new EnemyType(enemyPrefabs[randomIndex], 1)); //O(n)
         }
 
-        return new Wave(enemies);
-    }
+        return new Wave(enemies); //O(1)
+    }//O(n^2)
 
     private void AnimateLightChange()
     {

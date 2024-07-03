@@ -81,14 +81,14 @@ public class TeslaTower : Tower
 
     protected override void Attack(GameObject target)
     {
-        EnemyControl enemyControl = target.GetComponent<EnemyControl>();
+        EnemyControl enemyControl = target.GetComponent<EnemyControl>();//O(1)
 
-        if (enemyControl != null)
+        if (enemyControl != null)//O(1)
         {
-            int damageToApply = Mathf.RoundToInt(teslaTowerConfig.fixedDamage);
-            enemyControl.TakeDamage(damageToApply);
+            int damageToApply = Mathf.RoundToInt(teslaTowerConfig.fixedDamage);//O(1)
+            enemyControl.TakeDamage(damageToApply);//O(1)
         }
-    }
+    }//O(1)
 
     private void DrawLightning(SimplyLinkedList<Vector3> positions)
     {
@@ -113,7 +113,7 @@ public class TeslaTower : Tower
 
             Invoke("DisableLineRenderer", 0.1f);
         }
-    }
+    }//O(n^2)
 
     private void DisableLineRenderer()
     {
